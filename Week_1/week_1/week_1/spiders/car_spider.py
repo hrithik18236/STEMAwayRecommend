@@ -1,7 +1,7 @@
 import scrapy
 
-class SellerCentral(scrapy.Spider):
-    name = "SellerCentral"
+class CarSpider(scrapy.Spider):
+    name = "CarSpider"
 
     def start_requests(self):
         urls = [
