@@ -17,13 +17,25 @@ class CarMainSpider(scrapy.Spider):
     ]
     download_delay = 2.5
 
+    # Standard parsing function
     def parse(self, response):
-        for quote in response.xpath("//tbody"):
-            yield {'ID' : quote.xpath(".//tr[@id]").extract_first(), 
-                    ''
-                    }
+        data = json.loads(response.body)
+        for topic in data['topic_list']['topics']:
+            yield { 
+                'topic_id'       : topic.get('id'),
+                'title'          : topic.get('title'),
+                'created_at'     : topic.get('created_at'),
+                'last_posted_at' : topic.get('last_posted_at'),
+                'views'          : topic.get('views'),
+                'like_count'     : topic.get('like_count'),
+                'category_id'    : topic.get('category_id'),
+                'total_replies'  : topic.get('reply_count'),
+                'total_posts'    : topic.get('posts_count'),
+                'topic_slug'     : topic.get('slug'),
+                'tags'           : topic.get('tags'),
+            }
 
-        # next_content = response.xpath("//li[@class='next']/a/@href").extract_first()
-        # if next_content != None:
-        #     next_link = response.urljoin(next_content)
-        #     yield scrapy.Request(url = next_link, callback = self.parse)
+        # Move onto the next request
+        if data['topic_list']['more_topics_url'] and self.curr_page < self.max_pages:
+            self.curr_page += 1
+            yield scrapy.Request(self.base_url.format(self.curr_page))
