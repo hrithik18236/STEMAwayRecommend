@@ -2,7 +2,6 @@ import scrapy
 from scrapy.crawler import CrawlerProcess
 import pandas as pd
 import json
-import os
 
 START_PAGE = 1
 MAX_PAGES = 1000
