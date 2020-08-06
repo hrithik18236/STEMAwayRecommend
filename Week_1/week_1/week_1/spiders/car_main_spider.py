@@ -33,7 +33,6 @@ class CarMainSpider(scrapy.Spider):
                 'topic_slug'     : topic.get('slug'),
                 'tags'           : topic.get('tags'),
             }
-
         # Move onto the next request
         if data['topic_list']['more_topics_url'] and self.curr_page < self.max_pages:
             self.curr_page += 1
