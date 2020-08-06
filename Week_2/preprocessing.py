@@ -26,6 +26,11 @@ def markdown_to_raw_text(markdown_text):
 raw_text = data_posts['cooked'].apply(markdown_to_raw_text)
 raw_text.to_frame().head()
 
-# Step 5 (Hint: What is a whitespace character? Are there multiple types of whitespace characters?)
+# Step 5 Remove punctuation marks and whitespace characters from the posts
+# (Hint: What is a whitespace character? Are there multiple types of whitespace characters?)
 def remove_non_alphanum_chars(raw_text):
-    return None
+  if not (raw_text is np.nan or raw_text is None):
+    return re.sub('[^A-Za-z0-9]+', ' ', raw_text).replace(" ", "")
+
+alphanum_removed = raw_text.apply(remove_non_alphanum_chars)
+alphanum_removed.to_frame().head()
