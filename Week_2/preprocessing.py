@@ -43,3 +43,12 @@ def process_post_text(post_df):
 
 data_posts_processed = process_post_text(data_posts)
 data_posts_processed.head()
+
+
+# Step 8 Display a comparison of both versions of all of the posts (original vs. formatted)
+# (Hint: use pandas)
+comp = data_posts[['cooked']]
+# comp.rename(columns = {'cooked' : 'raw cooked '}, inplace = True)
+
+# Step 9 Save the updated dataset into a CSV file(Hint: use pandas)
+data_posts_processed.to_csv("CarTalkCommunityPostProcessed.csv")
