@@ -34,3 +34,12 @@ def remove_non_alphanum_chars(raw_text):
 
 alphanum_removed = raw_text.apply(remove_non_alphanum_chars)
 alphanum_removed.to_frame().head()
+
+# Step 6 Update the data scraped using Scrapy to contain the formatted posts
+def process_post_text(post_df):
+  temp = post_df.copy()
+  temp['cooked'] = temp['cooked'].apply(markdown_to_raw_text).apply(remove_non_alphanum_chars)
+  return temp
+
+data_posts_processed = process_post_text(data_posts)
+data_posts_processed.head()
